@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <title>E-Commerce App</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        text-align: center;
+        background: #f2f2f2;
+      }
+
+      h1 {
+        background: #333;
+        color: white;
+        padding: 15px;
+      }
+
+      .product {
+        background: white;
+        margin: 10px auto;
+        padding: 10px;
+        width: 50%;
+        border-radius: 8px;
+      }
+
+      button {
+        padding: 8px;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      #cart {
+        background: white;
+        margin: 20px auto;
+        padding: 10px;
+        width: 50%;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>My Online Store</h1>
+
+    <h2>Products</h2>
+    <div id="products"></div>
+
+    <h2>Cart</h2>
+    <div id="cart"></div>
+
+    <button onclick="checkout()">Checkout</button>
+
+    <script>
+      let products = [
+        { name: "Laptop", price: 50000 },
+        { name: "Mobile", price: 20000 },
+        { name: "Headphones", price: 2000 },
+      ];
+
+      let cart = [];
+
+      function displayProducts() {
+        let output = "";
+        products.forEach((p, index) => {
+          output += `
+            <div class="product">
+                <h3>${p.name}</h3>
+                <p>Price: ₹${p.price}</p>
+                <button onclick="addToCart(${index})">Add to Cart</button>
+            </div>`;
+        });
+        document.getElementById("products").innerHTML = output;
+      }
+
+      function addToCart(index) {
+        cart.push(products[index]);
+        displayCart();
+      }
+
+      function displayCart() {
+        let output = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += item.price;
+          output += `
+            <p>
+                ${item.name} - ₹${item.price}
+                <button onclick="removeFromCart(${index})">Remove</button>
+            </p>`;
+        });
+
+        output += `<h3>Total: ₹${total}</h3>`;
+        document.getElementById("cart").innerHTML = output;
+      }
+
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        displayCart();
+      }
+
+      function checkout() {
+        alert("Order placed successfully!");
+        cart = [];
+        displayCart();
+      }
+
+      displayProducts();
+    </script>
+  </body>
+</html>
